@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Example</title>
+</head>
+
+<body>
+    <input type="text" id="url" placeholder="Digite a URL aqui" />
+    <input type="text" id="nome" placeholder="Digite o nome do arquivo gerado" />
+    <button onclick="handleQrCode()">Gerar Qr Code</button>
+
+    <script>
+        const handleQrCode = async () => {
+            const url = document.getElementById('url').value;
+            const nomeArquivo = document.getElementById('nome').value;
+
+            const obj = { url: url, nome: nomeArquivo };
+
+            try {
+                const response = await fetch('/qrcode/gerar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                });
+
+                const data = await response.json();
+
+                console.log(data);
+            } catch (err) {
+                console.log('Erro: ', err);
+            }
+        };
+    </script>
+</body>
+
+</html>
